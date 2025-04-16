@@ -1,0 +1,241 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    
+}
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: rgb(240, 230, 140);
+    background-size: cover;
+}
+
+.container_form{
+    display: flex;
+    border-radius: 20px;
+    box-shadow: 0 5px 7px   rgba(0, 0, 0, .1);
+    height: 500px;
+    max-width: 900px;
+    transition: all 1s ease;
+    margin: 10px;
+}
+
+.information {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    background-color: lightyellow;
+    border-top-left-radius: 20px;
+}
+
+.info-childs{
+    width: 100%;
+    padding: 0 30px;
+    
+}
+
+.info-childs h2 {
+    font-size: 2.5rem;
+    color: hsl(39, 94%, 19%); 
+}
+
+.info-childs p {
+    
+    color: hsl(39, 94%, 19%); 
+}
+
+
+.info-childs p{
+    margin: 15px 0;
+    color: #555;
+}
+
+.form-information{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120%;
+    text-align: center;
+    background-color: #f8f8f8;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+
+.form-information-childs h2{
+    color: #333;
+    font-size: 2rem;
+}
+
+.icons{
+    margin: 15px 0;
+}
+
+.icons i{
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    margin: 0 10px;
+    color: darkgoldenrod;
+    border: solid thin darkgoldenrod;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+    
+}
+
+
+.icons i:hover{
+    background-color: darkkhaki;
+    color: #fff;
+}
+
+.form{
+    margin: 30px 0 0 0;
+}
+
+.form h2{
+    margin: 25px 0 0 0;
+}
+
+.form label{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    padding: 0 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+}
+
+.form label input{
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    color: #333;
+}
+
+.input-campo{
+    background-color: rgb(255, 255, 255);
+    color: #1d1608;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(66, 49, 49, 0.1);
+    text-decoration: none;
+    
+}
+
+.form label i{
+    color: chocolate;
+}
+
+.form h2{
+    color: hsl(39, 94%, 19%);
+}
+
+.boton-registrarse{
+    background-color: orange;
+    color: #fff;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+    text-decoration: none;
+
+}
+
+.boton-registrar-todo{
+    background-color: orange;
+    color: #fff;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+    text-decoration: none;
+}
+
+
+
+
+.form-information-childs input[type="submit"]{
+
+    background-color: orange;
+    color: #fff;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+    text-decoration: none;
+}
+
+.form-information-childs .boton-agregar{
+
+    background-color: orange;
+    color: #fff;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+    text-decoration: none;
+
+}
+
+.boton-guardar {
+    background-color: orange;
+    color: #fff;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+    text-decoration: none;
+}
+
+
+.form input[type="submit"]:hover{
+    background-color: rgb(197, 130, 5);
+}
+
+.form-information-childs input[type="submit"]:hover{
+    background-color: rgb(197, 130, 5);
+
+}
+
+.form a[class="boton-mas"]{
+
+    background-color: orange;
+    color: #fff;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+    text-decoration: none;
+}
+
+/* responsive form*/
+@media screen and (max-width:750px){
+    html {
+        font-size: 12px;
+    }
+}
+

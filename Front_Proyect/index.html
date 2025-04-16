@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="CSS/estilos.css">
+</head>
+<body>
+
+<div class="container_form">
+    <div class="information">
+        <div class="info-childs">
+            <h2>Bienvenidos</h2>
+            <p>A QR-ASIST, por favor ingresa tus datos</p>
+        </div>
+    </div>
+
+    <div class="form-information">
+        <div class="form-information-childs">
+            <form class="form" id="formularioRegistro">
+                <h2>Crear una cuenta</h2>
+
+                <label>
+                    <i class='bx bxs-user'></i>
+                    <input type="text" class="input-campo" name="nombre_padre" placeholder="Nombres completos" required minlength="4" maxlength="50">
+                </label>
+
+                <label>
+                    <i class='bx bxl-gmail'></i>
+                    <input type="email" class="input-campo" name="correo_padre" placeholder="Correo electrónico" required minlength="4" maxlength="50">
+                </label>
+
+                <label style="position: relative;">
+                    <i class='bx bx-lock-alt'></i>
+                    <input type="password" class="input-campo" name="contrasena_padre" placeholder="Contraseña" id="contrasenaInput" required minlength="4" maxlength="50">
+                    <i class='bx bx-show' id="toggleContrasena" style="position: absolute; right: 10px; top: 12px; cursor: pointer;"></i>
+                </label>
+
+                <h2>Agregar al estudiante</h2>
+
+                <label>
+                    <i class='bx bx-child'></i>
+                    <input type="text" class="input-campo" name="nombre_estudiante" placeholder="Nombres del estudiante" required minlength="4" maxlength="50">
+                </label>
+
+                <label>
+                    <i class='bx bxs-envelope'></i>
+                    <input type="email" class="input-campo" name="correo_estudiante" placeholder="Correo del estudiante" required minlength="4" maxlength="50">
+                </label>
+
+                <button type="button" class="boton-agregar" onclick="validarYAgregar()">Agregar</button>
+            </form>
+
+            <button type="button" class="boton-registrarse" onclick="validarYRegistrar()">Registrarse</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function validarEmail(email) {
+        // Validación básica de correo
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
+
+    function validarCampos() {
+        const campos = document.querySelectorAll(".input-campo");
+
+        for (let campo of campos) {
+            const valor = campo.value.trim();
+            if (valor.length < 4 || valor.length > 50) {
+                alert("Todos los campos deben tener entre 4 y 50 caracteres.");
+                return false;
+            }
+        }
+
+        // Validación extra de correos
+        const correoPadre = document.querySelector('[name="correo_padre"]').value;
+        const correoEstudiante = document.querySelector('[name="correo_estudiante"]').value;
+
+        if (!validarEmail(correoPadre) || !validarEmail(correoEstudiante)) {
+            alert("Por favor ingresa correos electrónicos válidos.");
+            return false;
+        }
+
+        return true;
+    }
+
+    function guardarDatos() {
+        const padre = {
+            nombre: document.querySelector('[name="nombre_padre"]').value,
+            correo: document.querySelector('[name="correo_padre"]').value,
+            contrasena: document.querySelector('[name="contrasena_padre"]').value
+        };
+
+        const estudiante = {
+            nombre: document.querySelector('[name="nombre_estudiante"]').value,
+            correo: document.querySelector('[name="correo_estudiante"]').value
+        };
+
+        localStorage.setItem("padre", JSON.stringify(padre));
+        let estudiantes = JSON.parse(localStorage.getItem("estudiantes")) || [];
+        estudiantes.push(estudiante);
+        localStorage.setItem("estudiantes", JSON.stringify(estudiantes));
+    }
+
+    function validarYRegistrar() {
+        if (validarCampos()) {
+            guardarDatos();
+            window.location.href = "registrar.html";
+        }
+    }
+
+    function validarYAgregar() {
+        if (validarCampos()) {
+            guardarDatos();
+            window.location.href = "agregar.html";
+        }
+    }
+
+    // Mostrar u ocultar contraseña
+    document.getElementById('toggleContrasena').addEventListener('click', function () {
+        const input = document.getElementById('contrasenaInput');
+        const icono = this;
+        if (input.type === 'password') {
+            input.type = 'text';
+            icono.classList.remove('bx-show');
+            icono.classList.add('bx-hide');
+        } else {
+            input.type = 'password';
+            icono.classList.remove('bx-hide');
+            icono.classList.add('bx-show');
+        }
+    });
+</script>
+
+</body>
+</html>
+

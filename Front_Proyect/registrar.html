@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="CSS/estilos.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/e4ad6d141d.js" crossorigin="anonymous"></script>
+  <title>Tabla de Datos</title>
+</head>
+<body style="background-color: #f0e68c;" class="d-flex justify-content-center align-items-center vh-100">
+  <div class="container bg-white p-4 rounded shadow" style="max-width: 900px;">
+    <div class="col-12">
+      <h2 class="text-center mb-4">Datos Registrados</h2>
+      <table class="table">
+        <thead class="bg-info text-white">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">NOMBRES</th>
+            <th scope="col">CORREO</th>
+            <th scope="col">CONTRASEÑA</th>
+            <th scope="col">ACCIONES</th>
+          </tr>
+        </thead>
+        
+        <tbody id="tabla-datos">
+          <!-- Aquí se insertan dinámicamente -->
+        </tbody>
+      </table>
+      <button type="button" class="boton-registrar-todo">Registrar Todo</button>
+    </div>
+  </div>
+
+  <script>
+    const tabla = document.getElementById("tabla-datos");
+
+    // Mostrar datos del padre
+    const padre = JSON.parse(localStorage.getItem("padre"));
+    if (padre) {
+      const filaPadre = document.createElement("tr");
+      filaPadre.innerHTML = `
+        <td>1</td>
+        <td>${padre.nombre}</td>
+        <td>${padre.correo}</td>
+        <td>${padre.contrasena}</td>
+
+        <td>
+          <button class="btn btn-warning btn-sm" onclick="editarPadre()">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+          <button class="btn btn-danger btn-sm" onclick="eliminarPadre()">
+            <i class="fa-solid fa-delete-left"></i>
+          </button>
+        </td>
+      `;
+      tabla.appendChild(filaPadre);
+    }
+
+    function editarPadre() {
+      const padre = JSON.parse(localStorage.getItem("padre"));
+      const nuevoNombre = prompt("Nuevo nombre:", padre.nombre);
+      const nuevoCorreo = prompt("Nuevo correo:", padre.correo);
+      const nuevaContrasena = prompt("Nueva contraseña:", padre.contrasena);
+
+      if (nuevoNombre && nuevoCorreo && nuevaContrasena) {
+        const actualizado = {
+          nombre: nuevoNombre,
+          correo: nuevoCorreo,
+          contrasena: nuevaContrasena
+
+        };
+        localStorage.setItem("padre", JSON.stringify(actualizado));
+        location.reload();
+      }
+    }
+
+    function eliminarPadre() {
+      if (confirm("¿Deseas eliminar los datos del padre?")) {
+        localStorage.removeItem("padre");
+        location.reload();
+      }
+    }
+
+    // Mostrar estudiantes
+    const estudiantes = JSON.parse(localStorage.getItem("estudiantes")) || [];
+    estudiantes.forEach((estudiante, index) => {
+      const fila = document.createElement("tr");
+      fila.innerHTML = `
+        <td>${index + 2}</td>
+        <td>${estudiante.nombre}</td>
+        <td>${estudiante.correo}</td>
+        <td>-</td>
+        <td>
+          <button class="btn btn-warning btn-sm" onclick="editarEstudiante(${index})">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+          <button class="btn btn-danger btn-sm" onclick="eliminarEstudiante(${index})">
+            <i class="fa-solid fa-delete-left"></i>
+          </button>
+        </td>
+      `;
+      tabla.appendChild(fila);
+    });
+
+    function editarEstudiante(index) {
+      const estudiantes = JSON.parse(localStorage.getItem("estudiantes")) || [];
+      const nuevoNombre = prompt("Nuevo nombre:", estudiantes[index].nombre);
+      const nuevoCorreo = prompt("Nuevo correo:", estudiantes[index].correo);
+      if (nuevoNombre && nuevoCorreo) {
+        estudiantes[index].nombre = nuevoNombre;
+        estudiantes[index].correo = nuevoCorreo;
+        localStorage.setItem("estudiantes", JSON.stringify(estudiantes));
+        location.reload();
+      }
+    }
+
+    function eliminarEstudiante(index) {
+      const estudiantes = JSON.parse(localStorage.getItem("estudiantes")) || [];
+      if (confirm("¿Deseas eliminar a este estudiante?")) {
+        estudiantes.splice(index, 1);
+        localStorage.setItem("estudiantes", JSON.stringify(estudiantes));
+        location.reload();
+      }
+    }
+  </script>
+  <script>
+    document.querySelector(".boton-registrar-todo").addEventListener("click", () => {
+      const padre = JSON.parse(localStorage.getItem("padre"));
+      const estudiantes = JSON.parse(localStorage.getItem("estudiantes")) || [];
+  
+      if (!padre || estudiantes.length === 0) {
+        alert("Faltan datos por registrar");
+        return;
+      }
+  
+      fetch("http://localhost/Front_Proyect/registrar.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ padre, estudiantes })
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert(data.mensaje);
+        localStorage.removeItem("padre");
+        localStorage.removeItem("estudiantes");
+        window.location.reload();
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        alert("Hubo un problema al registrar los datos.");
+      });
+    });
+  </script>
+  
+</body>
+</html>
